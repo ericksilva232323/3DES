@@ -8,6 +8,12 @@
 
 ### FIREBASECONFIG.JS
 
+```bash
+    npm install firebase
+```
+
+# Programe toda linha de comando necessária
+
 ```js
 
     import { inicializeApp } from 'firebase/app';
@@ -40,7 +46,7 @@ const firebaseConfig = {
 
 ```js
 
-    import React, { useState } from "react";
+   import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, TextInput, FlatList, Image } from "react-native";
 import { db } from "./firebaseconfig";
 import { collection, addDoc, getDocs } from "firebase/firestore";
@@ -94,8 +100,136 @@ export default function App() {
         onChangeText={SetNamePet}
       />
 
-    </View>
-  )
-}
+      <Button
+        title={loading ? "Adicionando..." : "Adicionar Pet"}
+        onPress={adicionarPet}
+        color="#6b8e23"
+      />
+
+      <Text style={styles.label}>Lista de Pets</Text>
+      <FlatList
+        data={pets}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.petItem}>
+            <image
+              source={{ uri: 'https://via.placeholder.com/100' }}
+              style={styles.petImage}
+            />
+          <view>
+            <Text style={styles.petName}>{item.nome}</Text>
+            <Text style={styles.petType}>{item.tipo}</Text>
+          </view>
+          </View>
+      )}
+        style={styles.petList}
+        />
+          </View>
+        );
+        }
+
+        const styles = StyleSheet.create({
+          container: {
+            flex: 1,
+            backgroundColor: '#f0f8ff',
+            padding: 20,
+          },
+          title: {
+            fontSize: 32,
+            fontWeight: 'bold',
+            color: '4682b4',
+            textAlign: 'center',
+            marginBottom: 20,
+          },
+          label: {
+            fontSize: 18,
+            marginBottom: 5,
+            color: '#333',
+          },
+        
+          input: {
+            width: '100%',
+            padding: 10,
+            marginBotton: 15,
+            borderWidth: 1,
+            borderColor: '#ccc',
+            borderRadius: 5,
+            backgroundColor: '#fff',
+          },
+        
+          Button: {
+            backgroundColor: '#6b8e23',
+            color: '#fff',
+            padding: 10,borderRadius: 5,
+          },
+        
+          sectionTitle: {
+            fontSize: 24,
+            fontWeight: 'bold',
+            color: '#4682b4',
+            marginTop: 20,
+            marginBottom: 10,
+          },
+          petList: {
+            marginTop: 10,
+          },
+          petItem: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#fff',
+            padding: 10,
+            borderRadius: 5,
+            marginBottom: 10,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.2,
+            shadowRadius: 2,
+            elevation: 3,
+          },
+          petImage: {
+            width: 50,
+            height: 50,
+            borderRadius: 25,
+            marginRight: 15,
+          },
+          petName: {
+            fontSize: 18,
+            fontWeight: 'bold',
+            color: '#333',
+          },
+          petType: {
+            fontSize: 16,
+            color: '#555',
+          },
+        });
 
 ```
+
+# BANCO DE DADOS 
+
+```JS
+        rules_version = '2';
+
+    service cloud.firestore {
+    match /databases/{database}/documents {
+        match /{document=**} {
+        allow read, write: if true; //ALTERAR PARA TRUE 
+        }
+    }
+    }
+
+```
+
+## Após realizar toda linha de programação executar os seguintes comandos
+
+- instalar dependências
+
+    ```bash
+    yarn run web
+    ```
+
+- rodar o codiga para abrir o servidor
+
+    ```bash
+    yarn add react-native-web react-dom @expo/metro-runtime
+    ```
